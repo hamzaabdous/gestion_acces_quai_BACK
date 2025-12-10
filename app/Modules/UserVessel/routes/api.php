@@ -10,7 +10,7 @@ Route::group([
     'prefix' => 'api/user-vessels'
 
 ], function ($router) {
-    Route::get('/', [UserVesselController::class, 'index']);
+    Route::get('/', [UserVesselController::class, 'indexall']);
     Route::post('/store', [UserVesselController::class, 'store']);
 
 

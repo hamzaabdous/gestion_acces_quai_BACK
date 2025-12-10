@@ -13,6 +13,8 @@ Route::group([
 ], function ($router) {
     Route::get('/', [UserVesselHistoriesController::class, 'index']);
     Route::post('/store', [UserVesselHistoriesController::class, 'store']);
+    Route::post('/update', [UserVesselHistoriesController::class, 'update']);
+    Route::post('/fetchByDay', [UserVesselHistoriesController::class, 'fetchByDay']);
 
 
 });

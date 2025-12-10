@@ -12,6 +12,7 @@ Route::group([
 ], function ($router) {
     Route::get('/', [UserVesselBadgesController::class, 'index']);
     Route::post('/store', [UserVesselBadgesController::class, 'store']);
+    Route::get('/records', [UserVesselBadgesController::class, 'getRecords']);
 
 
 });

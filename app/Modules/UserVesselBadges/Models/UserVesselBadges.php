@@ -13,6 +13,8 @@ class UserVesselBadges extends Model
         'user_vessel_history_id',
         'badge_place',
         'badge_date',
+        'action',
+        'device_id',
     ];
 
     public function history()

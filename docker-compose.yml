@@ -1,0 +1,81 @@
+version: "3.7"
+
+services:
+  # PHP-FPM - Service
+  gestion_access_pointage:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: gestion_access_pointage
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    depends_on:
+      - gestion_access_pointage_db
+    volumes:
+      - ./:/var/www
+      - ./docker-files/php/local.ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+
+    networks:
+      - gestion_access_pointage-network
+
+  # NGINX - Service
+  gestion_access_pointage_webserver:
+    image: nginx:alpine
+    container_name: gestion_access_pointage_webserver
+    restart: always
+    tty: true
+
+    ports:
+      - "9050:80"
+      - "9051:443"
+
+    volumes:
+      - ./:/var/www
+      - ./docker-files/nginx/conf.d/:/etc/nginx/conf.d/
+
+    networks:
+      - gestion_access_pointage-network
+
+  # MariaDB - Service
+  gestion_access_pointage_db:
+    image: mysql:5.7
+    container_name: gestion_access_pointage_db
+    restart: unless-stopped
+    tty: true
+
+    ports:
+      - "9052:3306"
+
+    environment:
+      MYSQL_DATABASE: "gestion_access_pointage"
+      MYSQL_ROOT_PASSWORD: "gestion_access_pointage"
+      MYSQL_PASSWORD: "gestion_access_pointage"
+      MYSQL_USER: "gestion_access_pointage"
+
+    volumes:
+      - ./docker-files/mysql:/var/lib/mysql
+    networks:
+      - gestion_access_pointage-network
+
+  gestion_access_pointage_phpmyadmin:
+    container_name: gestion_access_pointage_phpmyadmin
+    depends_on:
+      - gestion_access_pointage_db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "9053:80"
+    environment:
+      PMA_HOST: gestion_access_pointage_db
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    networks:
+      - gestion_access_pointage-network
+
+# Networks
+networks:
+  gestion_access_pointage-network:
+    driver: bridge

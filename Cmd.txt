@@ -1,0 +1,12 @@
+1 - docker-compose build --no-cache gestion_access_pointage
+2 - docker-compose up -d
+3 - docker exec -it -u 0 gestion_access_pointage sh
+4 - chown -R $USER:www storage
+5 - chown -R $USER:www bootstrap/cache
+6 - chmod -R 775 storage
+7 - chmod -R 775 bootstrap/cache
+8 - composer install
+9 - php artisan key:generate
+10 - php artisan storage:link
+11 - php artisan migrate
+12 - php artisan db:seed

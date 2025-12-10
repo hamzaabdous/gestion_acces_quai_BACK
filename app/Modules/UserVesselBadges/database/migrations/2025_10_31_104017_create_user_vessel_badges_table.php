@@ -17,6 +17,8 @@ return new class extends Migration
                   ->constrained('user_vessel_histories')
                   ->onDelete('cascade');
             $table->string('badge_place'); // e.g., Gate A, Dock 1
+            $table->string('device_id'); // e.g., Gate A, Dock 1
+            $table->boolean('action'); // e.g., Gate A, Dock 1
             $table->timestamp('badge_date'); // date & time of badge
             $table->timestamps();
         });
