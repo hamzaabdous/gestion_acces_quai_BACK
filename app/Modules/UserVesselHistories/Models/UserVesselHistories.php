@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Modules\UserVessel\Models\UserVessel;
 use App\Modules\UserVesselBadges\Models\UserVesselBadges;
 use App\Modules\WorkareaVesselProfile\Models\WorkareaVesselProfile;
+use App\Modules\User\Models\User;
 class UserVesselHistories extends Model
 {
     use HasFactory;
@@ -18,6 +19,7 @@ class UserVesselHistories extends Model
         'work_date',
         'overtime',
         'workarea',
+        "user_id",
     ];
 
     // Relation to UserVessel
@@ -32,5 +34,9 @@ class UserVesselHistories extends Model
     public function profile()
     {
         return $this->belongsTo(WorkareaVesselProfile::class, 'profile_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

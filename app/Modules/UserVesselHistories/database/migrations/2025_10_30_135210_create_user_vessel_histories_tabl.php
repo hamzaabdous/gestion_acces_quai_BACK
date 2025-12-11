@@ -23,6 +23,8 @@ return new class extends Migration {
                 ->nullable()
                 ->constrained('workarea_vessel_profiles')
                 ->onDelete('set null');
+            $table->foreignId(column: 'user_id')->nullable()->index();
+
         });
     }
 
